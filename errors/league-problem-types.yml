@@ -1,0 +1,53 @@
+generated: '2026-08-25'
+method: probed
+source: https://api.league.com/ (live unauthenticated error responses, observed 2026-08-25)
+name: League Platform API error catalog
+provider: League
+format: json:api
+format_note: >-
+  NOT RFC 9457 problem+json. League's gateway returns the JSON:API error document shape
+  (https://jsonapi.org/format/#errors) under the registered JSON:API media type
+  application/vnd.api+json. Recorded as json:api rather than rfc9457 so the distinction is not lost.
+envelope:
+  media_type: application/vnd.api+json
+  shape: '{"errors": [ { "code": "...", "detail": "...", "id": "...", "title": "..." } ]}'
+  fields:
+  - name: errors
+    type: array
+    description: JSON:API top-level errors member; one object per error.
+  - name: errors[].code
+    type: string
+    description: 'Machine-readable error code. Observed value: not_found.'
+  - name: errors[].detail
+    type: string
+    description: 'Human-readable explanation. Observed value: "Not found".'
+  - name: errors[].id
+    type: string
+    description: >-
+      Per-occurrence 32-character hex correlation identifier, unique on every response — the value an
+      integrator quotes to League support. This is the request-tracing handle the API exposes.
+  - name: errors[].title
+    type: string
+    description: 'Short summary. Observed value: "Something Went Wrong".'
+  evidence_example: '{"errors":[{"code":"not_found","detail":"Not found","id":"8d655aa569214899a956eadd8ea800e7","title":"Something Went Wrong"}]}'
+problem_types:
+- code: not_found
+  http_status: 404
+  title: Something Went Wrong
+  detail: Not found
+  method: probed
+  evidence: https://api.league.com/ and every unrouted path probed 2026-08-25
+  remediation: >-
+    The gateway returns 404 for any route not provisioned to the calling credential, so a 404 does not
+    distinguish "this resource does not exist" from "your key is not entitled to this route". Confirm
+    the route was provisioned for your use case under the Developer Program before treating it as a
+    missing resource.
+coverage:
+  note: >-
+    ONLY ONE error type is recorded because only one is publicly observable. The gateway answers 404
+    for every unauthenticated path — including /v1/users, /users, /me, /health, /version, /v1/config —
+    so no 401, 403, 422, 429 or 5xx response could be elicited without provisioned credentials, and
+    none is documented publicly. This catalog is deliberately incomplete rather than padded; the rest
+    of League's error surface is behind the Auth0-gated documentation portal.
+  probed_paths_all_404: [/, /v1, /v1/users, /users, /me, /health, /v1/health, /version, /v1/config]
+docs: null

@@ -1,23 +1,123 @@
 aid: league
 name: League
-description: 'League is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'League is a Toronto-founded (2014) healthcare platform company whose Health OS powers consumer
+  healthcare experiences for payers, providers, consumer health brands and employers, and which now positions
+  itself as a healthcare-grade agentic experience platform shipping pre-built AI Agent Teams for benefits
+  navigation, care navigation and health coaching. Its data platform is built on the HL7 FHIR standard,
+  using FHIR resources such as QuestionnaireResponse and CarePlan to model both integrated healthcare
+  data and member-generated data across a longitudinal health record. League runs a Developer Program
+  that gives contracted customers SDKs, a server-driven UI framework, back-end extensions and data integrations
+  for embedding League into existing applications. The platform API is served from a live Kong-fronted
+  gateway at api.league.com that answers with the JSON:API media type, but neither the API reference nor
+  any machine-readable contract is published publicly: the documentation portal sits behind an Auth0 login
+  and developer access is granted through a contact-sales form.'
+image: https://e3r429ujnza.exactdn.com/wp-content/uploads/2022/06/league-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/league/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
 tags:
 - Company
-apis: []
+- Health
+- Healthcare
+- Digital Health
+- Health Benefits
+- Interoperability
+- FHIR
+- Agents
+- Artificial Intelligence
+- Patient Engagement
+- Insurance
+- SaaS
+apis:
+- name: League Platform API
+  description: The League platform API, served from the Kong-fronted gateway at api.league.com. Unauthenticated
+    requests return an RFC-shaped JSON:API error document (content-type application/vnd.api+json) and
+    carry x-ratelimit-limit-360 / x-ratelimit-remaining-360 response headers, confirming a live, rate-limited
+    production gateway. Access is provisioned per customer as API Keys under the League Developer Program
+    Terms; no public API reference or machine-readable contract is published.
+  humanURL: https://league.com/digital-healthcare-developer-program/
+  baseURL: https://api.league.com
+  tags:
+  - Health
+  - FHIR
+  - Platform
+  properties:
+  - type: RateLimits
+    url: rate-limits/league-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/league-problem-types.yml
+  - type: Authentication
+    url: authentication/league-authentication.yml
+  - type: Conventions
+    url: conventions/league-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: TrustCenter
+  url: security/league-trust-center.yml
+- type: DomainSecurity
+  url: security/league-domain-security.yml
 - type: Website
-  url: https://www.hiive.com/securities/league-stock
+  url: https://league.com/
+- type: DeveloperPortal
+  url: https://league.com/digital-healthcare-developer-program/
+- type: SignUp
+  url: https://league.com/digital-healthcare-developer-program/join/
+- type: TermsOfService
+  url: https://league.com/developer-program-terms/
+- type: PrivacyPolicy
+  url: https://league.com/privacy-policy/
+- type: Support
+  url: https://help.league.com/ca-en
+- type: Blog
+  url: https://league.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/leagueinc
+- type: Compliance
+  url: conformance/league-conformance.yml
+- type: Conformance
+  url: conformance/league-conformance.yml
+- type: ChangeLog
+  url: changelog/league-changelog.yml
+- type: Deprecation
+  url: lifecycle/league-lifecycle.yml
+- type: Lifecycle
+  url: lifecycle/league-lifecycle.yml
+- type: Plans
+  url: plans/league-plans-pricing.yml
+- type: Packages
+  url: packages/league-packages.yml
+- type: LLMsTxt
+  url: llms/league-llms.txt
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: contract-absent-docs-gated
+  detail: 'League runs a live production API — api.league.com answers with the JSON:API media type behind
+    Kong 3.8.0 and enforces an advertised 10,000-request/360-second rate limit — but publishes no machine-readable
+    contract anywhere: docs.league.com 302s to an Auth0 universal login, developer.league.com (formerly
+    a ReadMe hub) now 301s to the marketing site, and developer access runs through a 48-hour contact-sales
+    form, so every artifact here is probed from the live gateway or searched from public policy pages
+    rather than read from a spec.'
+  evidence:
+  - url: https://api.league.com/
+    status: 404
+  - url: https://docs.league.com/
+    status: 302
+  - url: https://developer.league.com/
+    status: 301
+  - url: https://api.league.com/openapi.json
+    status: 404
+  - url: https://league.com/digital-healthcare-developer-program/join/
+    status: 200
+  checked: '2026-08-25'

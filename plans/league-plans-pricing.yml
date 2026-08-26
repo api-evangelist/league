@@ -1,0 +1,27 @@
+generated: '2026-08-25'
+method: searched
+source: https://league.com/ ; https://league.com/digital-healthcare-developer-program/join/ ; https://league.com/contact-us/
+name: League pricing and plans
+provider: League
+plan_count: 0
+plans: []
+pricing_model: enterprise-contract
+note: >-
+  League publishes NO pricing at all. There is no /pricing page, no pricing entry in the site
+  navigation or footer, and no self-service tier. League sells enterprise platform contracts to
+  payers, providers, consumer health brands and employers, and routes every commercial and developer
+  inquiry through a contact form — the Developer Program join page states "Fill out the form and
+  we'll be in touch within 48 hours." API access is provisioned per customer per authorized use case
+  under the Developer Program Terms, so API entitlements are negotiated, not listed.
+free_tier: false
+trial: false
+evidence:
+- url: https://league.com/
+  status: 200
+  note: no Pricing link in navigation or footer (verified against the rendered page)
+- url: https://league.com/digital-healthcare-developer-program/join/
+  status: 200
+  note: contact-sales lead form, not a signup or plan selector
+- url: https://league.com/developer-program-terms/
+  status: 200
+  note: API Keys are "provisioned" per authorized use case; no published price or quota

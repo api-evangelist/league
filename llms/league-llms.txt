@@ -1,0 +1,97 @@
+# League
+
+> League is a healthcare platform company (founded 2014, Toronto; $285M+ raised) whose Health OS
+> powers consumer healthcare experiences for payers, providers, consumer health brands and employers
+> across 63M+ members. It now positions itself as a healthcare-grade agentic experience platform,
+> shipping pre-built AI "Agent Teams" for benefits navigation, care navigation and health coaching.
+> Its data platform is built on the HL7 FHIR standard.
+
+## What an agent needs to know first
+
+League has a real, live, production API — and no public way to call it.
+
+- The gateway at `https://api.league.com` is live: Kong 3.8.0 behind Cloudflare, serving the JSON:API
+  media type `application/vnd.api+json` and enforcing a 10,000-request / 360-second rate limit that
+  it advertises on every response.
+- There is **no published OpenAPI, GraphQL SDL, AsyncAPI, gRPC or WSDL contract** anywhere on any
+  League host. Contract discovery was run exhaustively (see "What was probed" below) and missed.
+- The API reference lives behind an Auth0 login at `https://docs.league.com/`, and developer access is
+  granted through a contact-sales form with a stated 48-hour response.
+- `https://developer.league.com/` was a ReadMe-hosted developer hub (it still CNAMEs to
+  `ssl.readmessl.com`) but now 301-redirects to the marketing site — the public developer hub is gone.
+- Authentication is by API Key, provisioned per customer per authorized use case. The gateway does
+  **not** challenge: unauthenticated requests return `404` with a JSON:API error document rather than
+  `401`, so an unentitled route is indistinguishable from a nonexistent one.
+
+An agent cannot integrate with League autonomously. Integration begins with a sales conversation.
+
+## Documentation
+
+- [Developer Program](https://league.com/digital-healthcare-developer-program/): the public entry
+  point — describes 18 SDKs, 5 functional modules, 25 analytic data tables, a server-driven UI
+  framework, back-end extensions and data integrations. No reference material.
+- [Developer Program Terms](https://league.com/developer-program-terms/): effective 1 June 2026. The
+  most technically informative public document League publishes. Confirms API Key provisioning, a
+  single authorized use case ("Embedding into Existing Applications"), an SDK licence that forbids
+  standalone redistribution, and a **six-month deprecation window** on breaking SDK changes.
+- [Documentation portal](https://docs.league.com/): Auth0-gated. Customers only.
+- [Platform Releases](https://league.com/digital-health-platform/releases/): seasonal product release
+  notes (Fall 2025, Spring 2026). No version numbers, no dates, no breaking-change markers.
+- [Help Center](https://help.league.com/): member-facing support, not developer support.
+
+## Standards and compliance
+
+- **FHIR**: League states its data platform is "based on the Fast Healthcare Interoperability
+  Resources (FHIR) standard", using FHIR as the data model for integrated and member-generated data,
+  naming `QuestionnaireResponse` and `CarePlan` resources. This is a documented claim — there is no
+  FHIR CapabilityStatement or `/metadata` endpoint to verify it against (`api.league.com/metadata`
+  returns 404).
+- **JSON:API**: confirmed by probe, at least for error documents.
+- **Trust center** ([trust.league.com](https://trust.league.com/), SafeBase): SOC 2 Type 2, HITRUST,
+  ISO/IEC 27001, HIPAA, NIST 800-53 Rev. 5, NIST 800-171 Rev. 3, NIST CSF, NIST AI RMF, FIPS 140-2,
+  21 CFR Part 11, 23 NYCRR 500, CPCSC Level 1, Canada PBMM, WCAG; GDPR, EU-US/UK/Swiss DPF, PIPEDA,
+  CCPA, CPRA, LGPD, NZ Privacy Act 2020. Subprocessors: Validic, Salesforce, Antavo, MongoDB,
+  Google Cloud.
+- **No vulnerability disclosure program**: no security.txt, no disclosure page, no bug bounty, no
+  published security contact.
+
+## Agent posture
+
+League's `robots.txt` explicitly **allows** every major AI crawler and agent by name — GPTBot,
+ChatGPT-User, OAI-SearchBot, ClaudeBot, Claude-SearchBot, Claude-User, anthropic-ai, PerplexityBot,
+Google-Extended, Meta-ExternalAgent, cohere-ai, Amazonbot, Applebot-Extended, Bytespider,
+MistralAI-User, DuckAssistBot, CCBot and more. The marketing surface is wide open to agents; the API
+surface is closed to them. There is no MCP server, no A2A agent card, and no `/llms.txt` of League's
+own.
+
+## What was probed (2026-08-25) and missed
+
+- OpenAPI/Swagger on `api.league.com`: `/openapi.json`, `/openapi.yaml`, `/swagger.json`,
+  `/v1/openapi.json`, `/api-docs`, `/docs`, `/redoc` — all 404 (or 403 at the edge).
+- GraphQL: `api.league.com/graphql` — 403 at the Cloudflare edge, no introspection surface.
+- MCP: `api.league.com/mcp` 404; `mcp.league.com` does not resolve.
+- A2A agent card: `/.well-known/agent-card.json` and `/.well-known/agent.json` on league.com,
+  api.league.com, app.league.com and help.league.com — all miss. Nothing written to `a2a/`.
+- `/.well-known/`: security.txt, openid-configuration, oauth-authorization-server,
+  oauth-protected-resource, api-catalog, ai-plugin.json — 29 probes across 4 hosts, all miss.
+- `/llms.txt` on league.com, docs.league.com and developer.league.com — all miss.
+- Package registries: npm (`@leagueinc`, `@league` scopes both empty), PyPI, RubyGems, Maven Central,
+  crates.io — zero first-party packages. The `league` PyPI project and `league` RubyGem are unrelated
+  namesakes and were rejected. `github.com/leagueinc` exists with zero public repositories.
+- Status page: `status.league.com` does not resolve; no status link anywhere on the site.
+- Pricing: no pricing page exists; enterprise contract only.
+
+## Company
+
+- [Website](https://league.com/)
+- [About](https://league.com/about/) — Michael Serbinis (Founder & CEO), Dan Leibu (Co-Founder, COO),
+  Dan Galperin (Co-Founder, CTO)
+- [Blog](https://league.com/blog/)
+- [Trust and Compliance](https://league.com/league-trust-centre/)
+- [Privacy Policy](https://league.com/privacy-policy/) · [Platform Privacy Policy](https://league.com/privacy-policy-platform/) · [AI Policy](https://league.com/ai-policy/)
+- [Sign in](https://app.league.com/sign-in)
+
+---
+Generated by the API Evangelist enrichment pipeline from League's public surface on 2026-08-25.
+method: generated — League publishes no llms.txt of its own (league.com/llms.txt: 403,
+docs.league.com/llms.txt: 400, developer.league.com/llms.txt: 403).

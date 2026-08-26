@@ -1,0 +1,63 @@
+generated: '2026-08-25'
+method: searched
+source: https://league.com/developer-program-terms/ ; https://league.com/digital-health-platform/releases/
+name: League platform lifecycle
+provider: League
+summary: >-
+  League publishes a contractual deprecation commitment inside its Developer Program Terms and a
+  seasonal platform releases page. It publishes no status page, no SLA document, and no API
+  versioning policy on any public surface.
+deprecation_policy:
+  present: true
+  method: searched
+  source: https://league.com/developer-program-terms/
+  window: 6 months
+  scope: SDKs
+  statement: >-
+    The Developer Program Terms state that breaking changes to SDKs carry a six-month deprecation
+    period during which both the old and the new version are supported.
+  applies_to_api: unknown
+  note: >-
+    The commitment is written against SDKs specifically. Whether the same six-month window governs
+    breaking changes to the HTTP API is not stated, and is not asserted here.
+  rfc8594_headers:
+    deprecation_header_observed: false
+    sunset_header_observed: false
+    note: >-
+      Neither `Deprecation` nor `Sunset` response headers were present on any probed api.league.com
+      response (2026-08-25). Only unrouted 404s are observable anonymously, so this is weak evidence
+      of absence rather than proof.
+versioning:
+  policy_published: false
+  scheme: unknown
+  note: >-
+    No API versioning policy is published. /v1 paths probe identically to unversioned paths (all 404
+    at the gateway), so a path-version scheme could be neither confirmed nor ruled out.
+status_page:
+  present: false
+  method: probed
+  evidence:
+  - url: https://status.league.com/
+    status: 0
+    note: NXDOMAIN — no DNS record exists for status.league.com
+  searched:
+  - statuspage.io / status.io / Atlassian Statuspage hosted page — none found under the League brand
+  - no status link in the league.com footer, navigation, help center or trust center
+  note: >-
+    No public status or uptime page found. Customer incident communication appears to be private.
+    NO StatusPage pointer is emitted in apis.yml, because none exists.
+sla:
+  published: false
+  note: >-
+    No public SLA. The Developer Program Terms reference commercial agreements but publish no uptime
+    or support-response commitment.
+releases:
+  present: true
+  url: https://league.com/digital-health-platform/releases/
+  cadence: seasonal
+  cross_reference: changelog/league-changelog.yml
+deprecated_operations:
+  count: 0
+  note: >-
+    Cannot be derived — no OpenAPI or operation list is published. This is an absence of evidence, not
+    evidence of zero deprecations.

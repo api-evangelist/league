@@ -1,0 +1,70 @@
+generated: '2026-08-25'
+method: searched
+probe: true
+source: https://trust.league.com/ ; https://league.com/league-trust-centre/
+name: League Trust Center
+provider: League
+url: https://trust.league.com/
+summary_page: https://league.com/league-trust-centre/
+vendor: SafeBase
+vendor_evidence: trust.league.com CNAMEs to league.portals.safebase.io
+summary: >-
+  League runs a full SafeBase trust portal naming fifteen-plus frameworks with downloadable audit
+  artifacts, plus a marketing-side summary page. For a company that publishes no API contract, the
+  compliance surface is by some distance its most complete public machine-adjacent documentation.
+certifications:
+- SOC 2 Type 2
+- HITRUST
+- ISO/IEC 27001
+- HIPAA
+- NIST 800-53 Rev. 5
+- NIST 800-171 Rev. 3
+- NIST CSF
+- NIST AI RMF
+- FIPS 140-2
+- 21 CFR Part 11
+- 23 NYCRR 500
+- CPCSC Level 1
+- Canada PBMM
+- WCAG
+privacy_regimes:
+- GDPR
+- EU-US Data Privacy Framework
+- UK Extension to the EU-US DPF
+- Swiss-US DPF
+- PIPEDA
+- CCPA
+- CPRA
+- LGPD
+- NZ Privacy Act 2020
+documents:
+- HIPAA SRA Report
+- HITRUST Report
+- Network Diagram
+- Pentest Report
+- Security and Compliance Whitepaper
+- SOC 2 Type 2 Report
+- Product Architecture
+- Certificate of Insurance
+- Data Subject Requests
+- Dispute Resolution Terms
+- Governance Schedule
+- Information Security Terms
+subprocessors:
+- Validic
+- Salesforce
+- Antavo
+- MongoDB
+- Google Cloud
+access: >-
+  Framework names, document titles and the subprocessor list are public on the portal landing page.
+  Downloading the reports themselves requires an access request / NDA through SafeBase.
+security_contact: null
+security_contact_note: >-
+  No security or disclosure email is published on either the trust portal landing page or the
+  league.com trust-centre summary page.
+evidence:
+- source: https://trust.league.com/
+  keywords: [soc 2 type 2, hitrust, iso/iec 27001, hipaa, gdpr, nist 800-53, nist ai rmf, fips 140-2, pentest report]
+- source: https://league.com/league-trust-centre/
+  keywords: [hipaa, hitrust, soc 2 type ii, nist 800-53, gdpr, ai guardrails, end-to-end encryption]

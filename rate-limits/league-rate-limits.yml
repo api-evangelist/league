@@ -1,0 +1,57 @@
+generated: '2026-08-25'
+method: probed
+source: https://api.league.com/ (live unauthenticated response headers, observed 2026-08-25)
+name: League Platform API rate limits
+provider: League
+summary: >-
+  League publishes no rate-limit reference publicly — the developer documentation portal is behind an
+  Auth0 login and the Developer Program Terms only say League "may enforce reasonable limits and other
+  functional restrictions built into the APIs relating to the access, timing, or usage". The numbers
+  below were read directly off live unauthenticated responses from the api.league.com gateway, which
+  emits Kong-style windowed rate-limit headers on every response including 404s.
+limit_count: 1
+limits:
+- scope: per-client (unauthenticated, observed per source IP at the gateway edge)
+  window: 360s
+  limit: 10000
+  burst: null
+  applies_to: all requests to api.league.com
+  evidence:
+    header_limit: 'x-ratelimit-limit-360: 10000'
+    header_remaining: 'x-ratelimit-remaining-360: 9986'
+    observed: '2026-08-25'
+    url: https://api.league.com/
+  note: >-
+    Kong windowed rate-limiting headers. The `-360` suffix names the window in seconds (6 minutes),
+    so the observed policy is 10,000 requests per 360 seconds. Remaining decremented by one per
+    request across the probe sequence, confirming the counter is live and enforced rather than
+    advertised. Authenticated/customer-provisioned limits are not observable without credentials and
+    are not published; they are negotiated per the Developer Program Terms.
+response_headers:
+- name: x-ratelimit-limit-360
+  description: Ceiling for the 360-second window.
+  observed: true
+- name: x-ratelimit-remaining-360
+  description: Requests remaining in the current 360-second window.
+  observed: true
+- name: retry-after
+  description: Not observed on any probed response; exhaustion behaviour untested (we did not exhaust the window).
+  observed: false
+- name: ratelimit-limit
+  description: Standard RFC 9238 draft header — NOT emitted. League uses only the Kong x-ratelimit-* windowed form.
+  observed: false
+exhaustion:
+  status_code: null
+  note: >-
+    Not observed. We deliberately did not exhaust the 10,000-request window against a production
+    healthcare gateway. Kong's default is 429 with Retry-After, but that is a vendor default, not a
+    League-published fact, so it is recorded as unknown.
+gateway:
+  product: Kong
+  version: '3.8.0'
+  evidence: 'via: 1.1 kong/3.8.0, 1.1 google; x-kong-upstream-latency / x-kong-proxy-latency / x-kong-request-id headers'
+  edge: Cloudflare (cf-ray a30e86504b5b97b9-YYZ, Toronto)
+docs: null
+docs_note: >-
+  No public rate-limit documentation. https://docs.league.com/ 302s to an Auth0 universal login at
+  documentation-portal.leagueinc-prod-usa.auth0.com.

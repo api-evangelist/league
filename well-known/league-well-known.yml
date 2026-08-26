@@ -1,0 +1,74 @@
+generated: '2026-08-25'
+method: probed
+source: live probes of /.well-known/* across every League host, 2026-08-25
+name: League .well-known probe
+provider: League
+summary: >-
+  EVERY /.well-known/ path missed on EVERY League host. Nothing is served. This file records the
+  absence; NO WellKnown, APICatalog or SecurityTxt pointer is wired into apis.yml, because a probe
+  documenting an absence must never be scored as a presence.
+result: none
+hosts:
+- host: league.com
+  note: >-
+    The WordPress origin answers 403 (not 404) for unrouted paths — its edge returns "Error 403
+    Forbidden" for anything outside the known route table. /robots.txt on the same host returns 200
+    with full content, which proves our client is not being blanket-blocked: these paths are simply
+    not served.
+  documents:
+  - {path: /.well-known/security.txt, status: 403, file: null}
+  - {path: /.well-known/openid-configuration, status: 403, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 403, file: null}
+  - {path: /.well-known/api-catalog, status: 403, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 403, file: null}
+  - {path: /.well-known/agent-card.json, status: 403, file: null}
+  - {path: /.well-known/agent.json, status: 403, file: null}
+- host: api.league.com
+  note: >-
+    Kong gateway behind Cloudflare. Returns a genuine JSON:API 404 document for each path, so these
+    are true negatives from a live, correctly-behaving API host.
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+- host: app.league.com
+  note: nginx 404 on every path.
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+- host: help.league.com
+  note: Help center host; 404 on every path.
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+agent_card:
+  found: false
+  note: >-
+    No A2A agent card on any host at either the canonical /.well-known/agent-card.json or the legacy
+    /.well-known/agent.json. Per the pipeline contract, NOTHING is written to a2a/ — no stub, no
+    candidate manifest — because an agent card may only ever be recorded when the provider serves it.
+robots_ai_posture:
+  url: https://league.com/robots.txt
+  status: 200
+  note: >-
+    Worth recording alongside the misses: League's robots.txt explicitly ALLOWS every major AI crawler
+    and agent user-agent by name — GPTBot, ChatGPT-User, OAI-SearchBot, ClaudeBot, Claude-SearchBot,
+    Claude-User, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, Meta-ExternalAgent,
+    cohere-ai, Amazonbot, Applebot-Extended, Bytespider, MistralAI-User, DuckAssistBot, CCBot and
+    others. League has deliberately opened its marketing surface to agents while publishing no
+    machine-readable API surface for them to act on.

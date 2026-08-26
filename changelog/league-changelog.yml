@@ -1,0 +1,41 @@
+generated: '2026-08-25'
+method: searched
+source: https://league.com/digital-health-platform/releases/
+name: League platform releases
+provider: League
+url: https://league.com/digital-health-platform/releases/
+scheme: seasonal
+scheme_note: >-
+  League ships a seasonal product-release page rather than a dated developer changelog. Entries are
+  labelled by season and year ("Fall 2025", "Spring 2026") with an availability state, and carry
+  NEITHER version numbers NOR exact dates. It is a marketing release page, so it records what shipped
+  at the product level and not API-breaking-change detail — an integrator cannot diff two API versions
+  from it. Recorded faithfully, including that limitation.
+current_version: null
+current_version_note: No platform version identifier is published.
+breaking_change_signal: false
+breaking_change_note: >-
+  The releases page does not mark breaking versus additive changes. The only breaking-change
+  commitment League publishes is the six-month SDK deprecation window in the Developer Program Terms
+  (see lifecycle/league-lifecycle.yml).
+entries:
+- version: Spring 2026
+  date: null
+  status: coming-soon
+  breaking: unknown
+  additions:
+  - Omnichannel Outreach — proactive engagement across voice and digital channels using real-time Health Story data
+  - Care Gaps Agent Team — predicts barriers and books appointments through a coordinated workflow
+  - Maternity Health Coach — condition-specific AI guidance from first trimester through postpartum
+- version: Fall 2025
+  date: null
+  status: available
+  breaking: unknown
+  additions:
+  - Benefits Navigation Agent Team — simplifies member benefits access and understanding
+  - Care Navigation Agents Team — guides members to appropriate care with personalized scheduling
+  - Health Coach Agent Team — personalized, evidence-based condition support
+entry_count: 2
+window: >-
+  Recent window only, as published. The page shows the current and next season; League does not
+  publish a historical release archive at this URL.

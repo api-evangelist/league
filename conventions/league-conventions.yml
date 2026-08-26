@@ -1,0 +1,95 @@
+generated: '2026-08-25'
+method: probed
+source: >-
+  https://api.league.com/ (live response headers + error bodies, 2026-08-25);
+  https://league.com/developer-program-terms/
+name: League Platform API conventions
+provider: League
+summary: >-
+  Cross-cutting runtime semantics for the League platform API. Almost every field here is either
+  observed on live unauthenticated responses or read from the Developer Program Terms — the semantics
+  reference itself is inside the Auth0-gated documentation portal, so anything not directly observable
+  is recorded as unknown rather than guessed.
+auth_style:
+  style: api-key
+  detail: Customer-provisioned API Keys (Developer Program Terms). Header/parameter placement not published.
+  source: https://league.com/developer-program-terms/
+media_type:
+  request: unknown
+  response: application/vnd.api+json
+  standard: JSON:API
+  evidence: 'content-type: application/vnd.api+json observed on every probed response'
+error_envelope:
+  standard: json:api
+  shape: '{"errors":[{"code","detail","id","title"}]}'
+  cross_reference: errors/league-problem-types.yml
+request_id_tracing:
+  present: true
+  mechanism: >-
+    Two independent correlation handles are returned. The JSON:API error object carries a
+    per-occurrence `id` (32-char hex) that is unique on every response, and the gateway returns an
+    `x-kong-request-id` response header. Either can be quoted to League support.
+  fields: ['errors[].id']
+  headers: [x-kong-request-id]
+  observed: '2026-08-25'
+rate_limit_signaling:
+  present: true
+  headers: [x-ratelimit-limit-360, x-ratelimit-remaining-360]
+  cross_reference: rate-limits/league-rate-limits.yml
+pagination:
+  style: unknown
+  note: >-
+    JSON:API defines a `links`/`page[...]` pagination convention and League serves the JSON:API media
+    type, but NO paginated response could be elicited anonymously (every route 404s), and the
+    convention is not published. Not asserted.
+versioning:
+  scheme: unknown
+  in_path: unlikely
+  note: >-
+    /v1 and /v1/* probe identically to unversioned paths (all 404 at the gateway), so path versioning
+    could be neither confirmed nor ruled out. No version header is echoed on responses. The Developer
+    Program Terms govern SDK versioning rather than API versioning.
+  cross_reference: lifecycle/league-lifecycle.yml
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    NO evidence either way. No Idempotency-Key header is documented publicly, none is echoed on
+    probed responses, and no write endpoint is reachable anonymously. Deliberately NOT asserted —
+    and no `Idempotency` pointer is emitted in apis.yml, because the check must reflect a published
+    capability, not an unfalsified possibility.
+dry_run_mode:
+  supported: unknown
+  note: No dry-run, preview or simulation parameter is documented on any public League surface.
+field_expansion:
+  supported: unknown
+  note: JSON:API defines `include` and `fields` per type; League's use of them is not published or observable.
+metadata:
+  supported: unknown
+reversibility:
+  grade: unknown
+  applies: unknown
+  detail: >-
+    NOT ASSESSABLE. Reversibility grading requires knowing the write surface, and League publishes no
+    operation list, no OpenAPI, and no public reference — the API reference is behind an Auth0 login
+    and developer access is a contact-sales form. We therefore cannot say whether cancel/refund/void/
+    restore operations exist, and we will not state a reversal window League has not published, since
+    an invented window is the one error in this pipeline that could cause real harm in a healthcare
+    context.
+  read_only: unknown
+  surfaces: []
+  note: >-
+    This is `unknown`, NOT `na`. `na` would assert the API is read-only, which we have no basis to
+    claim; League's platform plainly supports member-generated writes (FHIR QuestionnaireResponse and
+    CarePlan resources are written as members interact with the platform, per League's own blog).
+  evidence:
+  - url: https://docs.league.com/
+    status: 302
+    note: redirects to documentation-portal.leagueinc-prod-usa.auth0.com universal login
+  - url: https://league.com/digital-healthcare-developer-program/join/
+    status: 200
+    note: contact-sales form, "Fill out the form and we'll be in touch within 48 hours"
+data_standard:
+  standard: HL7 FHIR
+  role: data model
+  cross_reference: conformance/league-conformance.yml

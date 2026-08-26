@@ -1,0 +1,46 @@
+generated: '2026-08-25'
+method: searched
+source: https://league.com/developer-program-terms/
+name: League Platform API authentication
+provider: League
+summary: >-
+  League provisions API Keys to contracted customers under the Developer Program Terms. There is no
+  public authentication reference, no OpenAPI securitySchemes to derive from, and no OAuth or OIDC
+  discovery document served on any League host.
+schemes:
+- type: apiKey
+  name: API Key
+  in: unknown
+  description: >-
+    The Developer Program Terms state that "Customers receive provisioned API Keys for authorized use
+    cases" and that League "may monitor Customer's use of any API by the Customer Developed Apps
+    through any technical means". The header or query parameter carrying the key is not published.
+  method: searched
+  evidence: https://league.com/developer-program-terms/
+  provisioning: >-
+    Per-customer, per-use-case. Annex 1 of the terms currently authorizes a single use case,
+    "Embedding into Existing Applications".
+oauth:
+  present: false
+  note: >-
+    No OAuth 2.0 or OpenID Connect surface is discoverable. Probed and all missed:
+    api.league.com/.well-known/oauth-authorization-server (404),
+    api.league.com/.well-known/oauth-protected-resource (404),
+    api.league.com/.well-known/openid-configuration (404),
+    app.league.com/.well-known/openid-configuration (404).
+    League's own documentation portal is fronted by Auth0
+    (documentation-portal.leagueinc-prod-usa.auth0.com) but that is League's internal IdP for docs
+    access, not an API authorization server exposed to integrators.
+observed_behaviour:
+  note: >-
+    The gateway does not challenge. Every unauthenticated request to api.league.com returns 404 with a
+    JSON:API error document rather than 401 with a WWW-Authenticate header, so the auth scheme cannot
+    be probed anonymously and unentitled routes are indistinguishable from absent ones.
+  www_authenticate_observed: false
+  probed: '2026-08-25'
+mtls:
+  present: unknown
+docs: null
+docs_note: >-
+  The authentication reference is inside the customer documentation portal. https://docs.league.com/
+  302s to an Auth0 universal login (HTTP 400 at the login endpoint for an anonymous client).

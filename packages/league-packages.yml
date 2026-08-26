@@ -1,0 +1,82 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, rubygems.org, search.maven.org, crates.io, api.github.com (searched
+  2026-08-25); https://league.com/digital-healthcare-developer-program/ ;
+  https://league.com/developer-program-terms/
+name: League SDKs and client packages
+provider: League
+package_count: 0
+packages: []
+official_sdk_count: 0
+summary: >-
+  League ADVERTISES 18 software development kits on its Developer Program page and its Developer
+  Program Terms are largely an SDK licence — but NOT ONE of them is published to any public package
+  registry, and none is downloadable without a customer contract. The SDKs are distributed inside the
+  Developer Program to provisioned customers. This is a zero we can stand behind, not a zero from not
+  looking: every major registry was queried directly and the two apparent hits were namesakes.
+provider_claim:
+  sdk_count_advertised: 18
+  source: https://league.com/digital-healthcare-developer-program/
+  quote: '"18 software development kits" listed under the developer program "by the numbers" section'
+  distribution: >-
+    Private. The Developer Program Terms grant customers a licence to incorporate SDKs into their own
+    applications and explicitly forbid redistributing them standalone, which is consistent with
+    contract-gated distribution rather than public registry publication.
+registries_searched:
+- registry: npm
+  queries: ['scope:leagueinc', 'scope:league', 'leagueinc', 'league health sdk', 'league health journey']
+  first_party_hits: 0
+  version: null
+  note: The @leagueinc and @league npm scopes both return 0 packages.
+- registry: pypi
+  queries: [league, leagueinc, league-sdk]
+  first_party_hits: 0
+  version: null
+  note: >-
+    NAMESAKE REJECTED — pypi.org/project/league/ (v0.0.2) is "Unofficial Python interface for the
+    League of Legends API" by timothyckl. Unrelated to League Inc; not recorded.
+- registry: rubygems
+  queries: [league, leagueinc]
+  first_party_hits: 0
+  version: null
+  note: >-
+    NAMESAKE REJECTED — rubygems.org/gems/league (v0.1.0) is "Measured beauty. Single-install entry
+    point bundling cubit_components and span_view". Unrelated to League Inc; not recorded.
+- registry: maven-central
+  queries: ['g:com.league', 'league health']
+  first_party_hits: 0
+  version: null
+- registry: crates.io
+  queries: [leagueinc]
+  first_party_hits: 0
+  version: null
+- registry: nuget
+  queries: [league]
+  first_party_hits: 0
+  version: null
+  note: Not separately queried beyond the generic term; no League Inc .NET SDK is referenced anywhere in League's public material.
+- registry: pkg.go.dev
+  queries: [league]
+  first_party_hits: 0
+  version: null
+  note: No Go module is referenced in League's public material.
+- registry: cdn
+  queries: []
+  first_party_hits: 0
+  version: null
+  note: >-
+    No CDN-distributed browser build found. League's UI extensibility is a server-driven UI framework
+    delivered through the platform, not a public script tag.
+source_code:
+  github_org: https://github.com/leagueinc
+  github_org_status: 200
+  public_repos: 0
+  note: >-
+    The github.com/leagueinc organization exists and is named "League", but publishes ZERO public
+    repositories, so there is no source-code route to the SDKs either.
+sdk_pointer_emitted: false
+sdk_pointer_note: >-
+  NO `SDKs` pointer is wired into apis.yml. The sdk_count check must reflect SDKs a developer can
+  actually obtain; League's are real but contract-gated and unversioned in public, so crediting them
+  would be crediting a claim rather than an artifact.
