@@ -24,6 +24,8 @@ deliveryModel:
   method: derived
 image: https://e3r429ujnza.exactdn.com/wp-content/uploads/2022/06/league-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/league/refs/heads/main/apis.yml
+x-api-posture: no-product-api
+x-api-posture-basis: observed
 x-type: company
 x-source: harvest:secondary-market
 specificationVersion: '0.20'
