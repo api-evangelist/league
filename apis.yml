@@ -11,6 +11,17 @@ description: 'League is a Toronto-founded (2014) healthcare platform company who
   gateway at api.league.com that answers with the JSON:API media type, but neither the API reference nor
   any machine-readable contract is published publicly: the documentation portal sits behind an Auth0 login
   and developer access is granted through a contact-sales form.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://e3r429ujnza.exactdn.com/wp-content/uploads/2022/06/league-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/league/refs/heads/main/apis.yml
 x-type: company
