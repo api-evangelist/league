@@ -59,6 +59,7 @@ tags:
 - Patient Engagement
 - Insurance
 - Software-as-a-Service
+- Canada
 tags_raw:
 - Company
 - Health
@@ -72,6 +73,7 @@ tags_raw:
 - Patient Engagement
 - Insurance
 - SaaS
+- Canada
 apis:
 - name: League Platform API
   description: The League platform API, served from the Kong-fronted gateway at api.league.com. Unauthenticated
